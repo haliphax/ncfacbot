@@ -1,9 +1,15 @@
 "Load all command extensions"
 
-from . import __all__ as _mods
-
 META_EXTENSION = True
 
+_mods = (
+    'closest',
+    'raid',
+    'safe',
+    'shop',
+    'sm',
+    'tick',
+)
 _package = __name__.replace('._all', '')
 
 
