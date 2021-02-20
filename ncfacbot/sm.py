@@ -71,8 +71,8 @@ def _done(bot, guild, channel, user, nick):
 
         # get the medic role, if any
         try:
-            medic = [r for r in fake_ctx.guild.roles if r.name == role][0]
-            msg += f'{medic.mention} '
+            medic = [r for r in fake_ctx.guild.roles if r.name in role]
+            msg += f'{" ".join([m.mention for m in medic])} '
         except IndexError:
             pass
 
@@ -258,7 +258,7 @@ medic_filter = RoleFilter('sm.medicrole')
 def setup(bot):
     # settings
     register('sm.medicrole', None, lambda x: True, False,
-             'The Discord server role used for announcing SM countdown '
+             'The Discord server role(s) used for announcing SM countdown '
              'expirations. Will be suppressed if it doesn\'t exist.',
              filter=medic_filter)
     register('sm.channel', None, lambda x: True, False,
