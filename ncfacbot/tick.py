@@ -6,7 +6,7 @@ from random import randrange
 import typing
 # 3rd party
 from aethersprite import log
-from aethersprite.common import (DATETIME_FORMAT, THUMBS_DOWN, seconds_to_str,)
+from aethersprite.common import DATETIME_FORMAT, seconds_to_str, THUMBS_DOWN
 from discord.ext.commands import command
 # local
 from . import get_next_tick
