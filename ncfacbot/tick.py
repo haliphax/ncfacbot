@@ -6,11 +6,11 @@ from datetime import datetime, timezone
 from random import randrange
 import typing
 # 3rd party
+from aethersprite import log
+from aethersprite.common import (DATETIME_FORMAT, THUMBS_DOWN, seconds_to_str,)
 from discord.ext.commands import command
 # local
-from aethersprite import log
-from aethersprite.common import (DATETIME_FORMAT, THUMBS_DOWN, get_next_tick,
-                             seconds_to_str,)
+from . import get_next_tick
 
 #: Future/past tick limit
 TICK_LIMIT = 1000

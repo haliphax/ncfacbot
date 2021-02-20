@@ -6,14 +6,13 @@ from datetime import datetime, timezone, timedelta
 from math import ceil
 import typing
 # 3rd party
-from discord.ext.commands import check, command
-from sqlitedict import SqliteDict
-# local
 from aethersprite import log
 from aethersprite.authz import channel_only
 from aethersprite.common import FakeContext, handle_ready, THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
 from aethersprite.settings import register, settings
+from discord.ext.commands import check, command
+from sqlitedict import SqliteDict
 
 channel_filter = ChannelFilter('sm.channel')
 

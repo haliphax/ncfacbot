@@ -6,16 +6,15 @@ from os import environ
 from os.path import dirname, join, realpath
 import re
 # 3rd party
-from discord.ext.commands import Cog, command
-from flask import abort, Blueprint, Flask, request, url_for
-from sqlitedict import SqliteDict
-# local
 from aethersprite import config, log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import FakeContext
 from aethersprite.filters import RoleFilter
 from aethersprite.settings import register, settings
 from aethersprite.webapp import app as webapp
+from discord.ext.commands import Cog, command
+from flask import abort, Blueprint, Flask, request, url_for
+from sqlitedict import SqliteDict
 
 #: Maximum number of items listed per Discord message to avoid rejection
 MAX_ITEMS_PER_MESSAGE = 20

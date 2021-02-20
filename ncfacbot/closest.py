@@ -5,11 +5,12 @@ from datetime import datetime, timedelta, timezone
 from math import ceil
 import typing
 # 3rd party
+from aethersprite import log
+from aethersprite.common import (DATETIME_FORMAT, get_timespan_chunks, MINUTE,
+                                 THUMBS_DOWN,)
 from discord.ext.commands import command
 # local
-from aethersprite import log
-from aethersprite.common import (DATETIME_FORMAT, get_timespan_chunks,
-                             get_next_tick, MINUTE, THUMBS_DOWN,)
+from . import get_next_tick
 
 
 @command(brief='Get closest tick to time offset')

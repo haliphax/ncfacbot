@@ -5,15 +5,14 @@ import asyncio as aio
 from datetime import datetime, timedelta, timezone
 from functools import partial
 # 3rd party
-from discord.ext.commands import check, Cog, command
-from sqlitedict import SqliteDict
-# local
 from aethersprite import log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import (DATETIME_FORMAT, FakeContext, handle_ready,
-                             seconds_to_str, THUMBS_DOWN)
+                                 seconds_to_str, THUMBS_DOWN)
 from aethersprite.filters import ChannelFilter, RoleFilter
 from aethersprite.settings import register, settings
+from discord.ext.commands import check, Cog, command
+from sqlitedict import SqliteDict
 
 #: Expected format for schedule input
 INPUT_FORMAT = '%Y-%m-%d %H:%M %z'

@@ -6,14 +6,13 @@ from functools import partial
 import typing
 from discord import channel
 # 3rd party
-from discord.ext.commands import check, Cog, command
-from sqlitedict import SqliteDict
-# local
 from aethersprite import log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import THUMBS_DOWN
 from aethersprite.filters import RoleFilter
 from aethersprite.settings import register, settings
+from discord.ext.commands import check, Cog, command
+from sqlitedict import SqliteDict
 
 #: Hard-coded list of components keyed by lowercase item name for lookup
 COMPONENTS = {
