@@ -10,7 +10,7 @@ from discord.ext.commands import Cog, command
 from flask import abort, Blueprint, Flask, request, url_for
 from sqlitedict import SqliteDict
 # local
-from aethersprite import log
+from aethersprite import config, log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import FakeContext
 from aethersprite.filters import RoleFilter
@@ -24,11 +24,15 @@ SPELLS_PATTERN = r'([- a-zA-Z0-9]+) - Small \w+ Gem, (\d+) shots \((\d+)\)'
 #: Regex for getting counts from potions, etc.
 COUNTS_PATTERN = r'\((\d+)\)'
 #: URL for UserScript, if any
-SCRIPT_URL = environ.get('SAFE_CONTENTS_SCRIPT', None)
+SCRIPT_URL = config.get('ncfacbot', {}) \
+        .get('safe_contents_script', environ.get('SAFE_CONTENTS_SCRIPT', None))
 #: URL for README, if any
-README_URL = environ.get(
-        'SAFE_CONTENTS_README',
-        'https://github.com/haliphax/ncfacbot/blob/master/ncfacbot/safe.md')
+README_URL = config.get('ncfacbot', {}) \
+        .get('safe_contents_readme',
+            environ.get(
+                'SAFE_CONTENTS_README',
+                'https://github.com/haliphax/ncfacbot/blob/master/ncfacbot/'
+                'safe.md'))
 
 authz_safe = partial(require_roles, setting='safe.roles')
 blueprint = Blueprint('safe', __name__, url_prefix='/nexusclash.safe',
