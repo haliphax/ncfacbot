@@ -1,7 +1,6 @@
 "Next game tick command"
 
 # stdlib
-import calendar
 from datetime import datetime, timezone
 from random import randrange
 import typing
