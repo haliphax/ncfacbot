@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		Nexus Clash Discord Bot Safe Contents (B4)
 // @namespace	https://roadha.us
-// @version		0.12
+// @version		0.13
 // @description	Sends the components, potions, and spell gems in the safe for consumption by https://github.com/haliphax/ncfacbot
 // @author		haliphax
 // @match		https://www.nexusclash.com/modules.php?name=Game*
@@ -25,7 +25,8 @@
 	}
 
 	// constants
-	const SETTINGS_ICON = 'https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/outline/chat.svg';
+	const SETTINGS_ICON = 'https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/outline/chat.svg',
+		POST_URL = 'https://ae.oddnetwork.org/nexusclash.safe/static/nc-safe-report.user.js';
 
 	const safe_forms = document.querySelectorAll(
 		'form[name="footlockergrab"]');
@@ -155,7 +156,7 @@
 
 	GM_xmlhttpRequest({
 		method: 'POST',
-		url: 'https://oddnetwork.org/ncfacbot/safe/post',
+		url: POST_URL,
 		data: JSON.stringify({
 			guild: my_char.guild,
 			key: my_char.key,
