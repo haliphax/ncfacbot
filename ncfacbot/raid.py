@@ -5,7 +5,7 @@ import asyncio as aio
 from datetime import datetime, timedelta, timezone
 from functools import partial
 # 3rd party
-from aethersprite import log
+from aethersprite import data_folder, log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import (DATETIME_FORMAT, FakeContext, handle_ready,
                                  seconds_to_str, THUMBS_DOWN)
@@ -55,7 +55,7 @@ class Raid(Cog, name='raid'):
     NOTE: A raid will not actually be scheduled until both a schedule AND a target have been set. Until then, check and cancel commands will get a "There is no scheduled raid" message.
     """
 
-    _schedules = SqliteDict('raid.sqlite3', tablename='schedule',
+    _schedules = SqliteDict(f'{data_folder}raid.sqlite3', tablename='schedule',
                             autocommit=True)
     _handles = {}
 

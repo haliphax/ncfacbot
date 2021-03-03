@@ -6,7 +6,7 @@ from os import environ
 from os.path import dirname, join, realpath
 import re
 # 3rd party
-from aethersprite import config, log
+from aethersprite import config, data_folder, log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import FakeContext
 from aethersprite.filters import RoleFilter
@@ -41,7 +41,8 @@ blueprint = Blueprint('safe', __name__, url_prefix='/nexusclash.safe',
 def _get_database():
     "Helper function to get a database reference"
 
-    return SqliteDict('safe.sqlite3', tablename='contents', autocommit=True)
+    return SqliteDict(f'{data_folder}safe.sqlite3', tablename='contents',
+                      autocommit=True)
 
 
 class Safe(Cog, name='safe'):

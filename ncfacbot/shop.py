@@ -4,9 +4,8 @@
 from collections import OrderedDict
 from functools import partial
 import typing
-from discord import channel
 # 3rd party
-from aethersprite import log
+from aethersprite import data_folder, log
 from aethersprite.authz import channel_only, require_roles
 from aethersprite.common import THUMBS_DOWN
 from aethersprite.filters import RoleFilter
@@ -90,8 +89,8 @@ class Shop(Cog, name='shop'):
     """
 
     # Persistent storage of shopping lists
-    _lists = SqliteDict('shop.sqlite3', tablename='shopping_list',
-                        autocommit=True)
+    _lists = SqliteDict(f'{data_folder}shop.sqlite3',
+                        tablename='shopping_list', autocommit=True)
 
     def __init__(self, bot):
         self.bot = bot

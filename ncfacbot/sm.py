@@ -6,7 +6,7 @@ from datetime import datetime, timezone, timedelta
 from math import ceil
 import typing
 # 3rd party
-from aethersprite import log
+from aethersprite import data_folder, log
 from aethersprite.authz import channel_only
 from aethersprite.common import FakeContext, handle_ready, THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
@@ -20,7 +20,8 @@ channel_filter = ChannelFilter('sm.channel')
 SM_LIMIT = 100
 
 #: Countdown schedule persisted to database file
-schedule = SqliteDict('sm.sqlite3', tablename='announce', autocommit=True)
+schedule = SqliteDict(f'{data_folder}sm.sqlite3', tablename='announce',
+                      autocommit=True)
 
 
 class SMSchedule(object):
