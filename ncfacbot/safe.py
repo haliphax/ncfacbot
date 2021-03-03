@@ -7,7 +7,7 @@ from os.path import dirname, join, realpath
 import re
 # 3rd party
 from aethersprite import config, data_folder, log
-from aethersprite.authz import channel_only, require_roles
+from aethersprite.authz import channel_only, require_roles_from_setting
 from aethersprite.common import FakeContext
 from aethersprite.filters import RoleFilter
 from aethersprite.settings import register, settings
@@ -33,7 +33,7 @@ README_URL = config.get('ncfacbot', {}) \
                 'https://github.com/haliphax/ncfacbot/blob/master/ncfacbot/'
                 'safe.md'))
 
-authz_safe = partial(require_roles, setting='safe.roles')
+authz_safe = partial(require_roles_from_setting, setting='safe.roles')
 blueprint = Blueprint('safe', __name__, url_prefix='/nexusclash.safe',
         root_path=realpath(dirname(__file__)),
         static_url_path='/static', static_folder='web')

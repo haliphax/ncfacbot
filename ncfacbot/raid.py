@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from functools import partial
 # 3rd party
 from aethersprite import data_folder, log
-from aethersprite.authz import channel_only, require_roles
+from aethersprite.authz import channel_only, require_roles_from_setting
 from aethersprite.common import (DATETIME_FORMAT, FakeContext, handle_ready,
                                  seconds_to_str, THUMBS_DOWN)
 from aethersprite.filters import ChannelFilter, RoleFilter
@@ -20,8 +20,9 @@ INPUT_FORMAT = '%Y-%m-%d %H:%M %z'
 MSG_NO_RAID = ':person_shrugging: There is no scheduled raid.'
 
 # authz decorators
-authz_schedule = partial(require_roles, setting='raid.scheduleroles')
-authz_check = partial(require_roles,
+authz_schedule = partial(require_roles_from_setting,
+                         setting='raid.scheduleroles')
+authz_check = partial(require_roles_from_setting,
                       setting=('raid.scheduleroles', 'raid.checkroles'))
 
 

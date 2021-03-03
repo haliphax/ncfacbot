@@ -6,7 +6,7 @@ from functools import partial
 import typing
 # 3rd party
 from aethersprite import data_folder, log
-from aethersprite.authz import channel_only, require_roles
+from aethersprite.authz import channel_only, require_roles_from_setting
 from aethersprite.common import THUMBS_DOWN
 from aethersprite.filters import RoleFilter
 from aethersprite.settings import register, settings
@@ -62,9 +62,9 @@ COMPONENTS = {
 }
 
 # authz decorators
-authz_list = partial(require_roles,
+authz_list = partial(require_roles_from_setting,
                      setting=('shop.setroles', 'shop.listroles'))
-authz_set = partial(require_roles, setting='shop.setroles')
+authz_set = partial(require_roles_from_setting, setting='shop.setroles')
 
 
 class ShoppingList(object):
