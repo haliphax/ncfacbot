@@ -7,9 +7,10 @@ from functools import partial
 # 3rd party
 from aethersprite import data_folder, log
 from aethersprite.authz import channel_only, require_roles_from_setting
-from aethersprite.common import (DATETIME_FORMAT, FakeContext, handle_ready,
-                                 seconds_to_str, THUMBS_DOWN)
+from aethersprite.common import (DATETIME_FORMAT, FakeContext, seconds_to_str,
+                                 THUMBS_DOWN)
 from aethersprite.filters import ChannelFilter, RoleFilter
+from aethersprite.handlers import handle_ready
 from aethersprite.settings import register, settings
 from discord.ext.commands import check, Cog, command
 from sqlitedict import SqliteDict

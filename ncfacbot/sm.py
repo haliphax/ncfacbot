@@ -8,8 +8,9 @@ import typing
 # 3rd party
 from aethersprite import data_folder, log
 from aethersprite.authz import channel_only
-from aethersprite.common import FakeContext, handle_ready, THUMBS_DOWN
+from aethersprite.common import FakeContext, THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
+from aethersprite.handlers import handle_ready
 from aethersprite.settings import register, settings
 from discord.ext.commands import check, command
 from sqlitedict import SqliteDict
