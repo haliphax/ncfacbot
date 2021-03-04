@@ -103,6 +103,7 @@ class Raid(Cog, name='raid'):
                      f'{raid.schedule}')
             next = datetime.timestamp(raid.schedule - timedelta(minutes=30))
             self._handles[ctx.guild.id] = loop.call_at(next, reminder2)
+            log.info('Scheduled 30 minute reminder')
 
         def reminder2():
             loop.create_task(
@@ -112,6 +113,7 @@ class Raid(Cog, name='raid'):
                      f'{raid.schedule}')
             next = datetime.timestamp(raid.schedule)
             self._handles[ctx.guild.id] = loop.call_at(next, announce)
+            log.info('Scheduled announcement')
 
         def announce():
             loop.create_task(
@@ -251,8 +253,7 @@ class Raid(Cog, name='raid'):
                 dt = datetime.strptime(when + ' +0000', INPUT_FORMAT)
             else:
                 dt = datetime.strptime(f'{dt.strftime("%Y-%m-%d")} {when} '
-                                       '+0000',
-                                       INPUT_FORMAT)
+                                       '+0000', INPUT_FORMAT)
         except:
             await ctx.message.add_reaction(THUMBS_DOWN)
             log.warning(f'{ctx.author} provided bad args: {when}')
