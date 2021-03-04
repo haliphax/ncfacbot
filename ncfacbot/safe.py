@@ -144,9 +144,9 @@ def _settings():
     register('safe.key', None, lambda x: True, False,
              'The key used by the UserScript for reporting.')
     register('safe.roles', None, lambda x: True, False,
-             'The server roles that are allowed to view safe contents. If set '
-             'there are no restrictions. Separate multiple entries with '
-             'commas.', filter=roles_filter)
+             'The server roles that are allowed to view safe contents. If '
+             'unset, there are no restrictions. Separate multiple entries '
+             'with commas.', filter=roles_filter)
 
 
 def setup(bot):
