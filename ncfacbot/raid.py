@@ -189,13 +189,14 @@ class Raid(Cog, name='raid'):
         c = ctx
 
         try:
-            c = [c for c in ctx.guild.channels
-                       if c.name == channel][0]
+            c = [c for c in ctx.guild.channels if c.name == channel][0]
         except IndexError:
+            log.warn(f'No match for {channel}')
             # No raid channel configured, send to same channel as command
             pass
 
         await c.send(f'**{message}**')
+        log.info(f'{ctx.author} raised the raid alarm')
 
     @command(name='raid.cancel')
     @check(authz_schedule)
@@ -260,7 +261,7 @@ class Raid(Cog, name='raid'):
 
         raid = self._schedules[ctx.guild.id] \
                 if ctx.guild.id in self._schedules \
-                else RaidSchedule(ctx.guild.id, nick, ctx.channel.name)
+                else RaidSchedule(ctx.guild.id, nick, ctx.channel.id)
         raid.schedule = dt
         raid.leader = nick
         self._schedules[ctx.guild.id] = raid
