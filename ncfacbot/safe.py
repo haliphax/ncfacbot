@@ -150,8 +150,6 @@ def _settings():
 
 
 def setup(bot):
-    "Discord bot setup"
-
     _settings()
     cog = Safe(bot)
 
@@ -160,6 +158,13 @@ def setup(bot):
         c.add_check(channel_only)
 
     bot.add_cog(cog)
+
+
+def teardown(bot):
+    global settings
+
+    for k in ('safe.key', 'safe.roles',):
+        del settings[k]
 
 
 @blueprint.route('/post', methods=('POST',))
