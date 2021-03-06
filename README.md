@@ -15,7 +15,7 @@ These categories (referred to as "Cogs") provide multiple commands.
 - `shop`
   Maintain shopping lists for components
 
-## :game_die: Stand-alone commands
+## :game_die: Independent commands
 
 - `sm`
   Sorcerer's Might countdown alarm
