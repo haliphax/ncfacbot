@@ -3,7 +3,6 @@
 META_EXTENSION = True
 
 _mods = (
-    'closest',
     'raid',
     'safe',
     'shop',
