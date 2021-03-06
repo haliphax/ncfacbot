@@ -5,22 +5,23 @@ import asyncio as aio
 from datetime import datetime, timezone, timedelta
 from math import ceil
 import typing
-# 3rd party
+# api
 from aethersprite import data_folder, log
 from aethersprite.authz import channel_only
 from aethersprite.common import FakeContext, THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
-from aethersprite.handlers import handle_ready
 from aethersprite.settings import register, settings
-from discord.ext.commands import check, command
+# 3rd party
+from discord.ext.commands import Bot, check, command
 from sqlitedict import SqliteDict
 
-channel_filter = ChannelFilter('sm.channel')
+bot: Bot = None
 
-#: Maximum allowed timer length
+# constants
 SM_LIMIT = 100
-
-#: Countdown schedule persisted to database file
+# filters
+channel_filter = ChannelFilter('sm.channel')
+# database
 schedule = SqliteDict(f'{data_folder}sm.sqlite3', tablename='announce',
                       autocommit=True)
 
@@ -104,8 +105,9 @@ def _done(bot, guild, channel, user, nick):
         bot.sm_alerts[guild] = cd
 
 
-@handle_ready
-async def ready(bot):
+async def on_ready():
+    global bot
+
     "Schedule SMSchedule from database; immediately announce those missed"
 
     if hasattr(bot, '__sm_ready__'):
@@ -257,7 +259,11 @@ async def sm(ctx, n: typing.Optional[int]=None):
 medic_filter = RoleFilter('sm.medicrole')
 
 
-def setup(bot):
+def setup(bot_: Bot):
+    global bot
+
+    bot = bot_
+
     # settings
     register('sm.medicrole', None, lambda x: True, False,
              'The Discord server role(s) used for announcing SM countdown '
@@ -268,11 +274,15 @@ def setup(bot):
              'posted. If set to the default, they will be announced in the '
              'same channel where they were last manipulated (per-user).',
              filter=channel_filter)
+
+    bot.add_listener(on_ready)
     bot.add_command(sm)
 
 
-def teardown(bot):
+def teardown(bot: Bot):
     global settings
 
     for k in ('sm.medicrole', 'sm.channel'):
         del settings[k]
+
+    bot.remove_listener(on_ready)

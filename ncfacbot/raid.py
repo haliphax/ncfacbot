@@ -10,7 +10,6 @@ from aethersprite.authz import channel_only, require_roles_from_setting
 from aethersprite.common import (DATETIME_FORMAT, FakeContext, seconds_to_str,
                                  THUMBS_DOWN)
 from aethersprite.filters import ChannelFilter, RoleFilter
-from aethersprite.handlers import handle_ready
 from aethersprite.settings import register, settings
 from discord.ext.commands import check, Cog, command
 from sqlitedict import SqliteDict
@@ -63,7 +62,6 @@ class Raid(Cog, name='raid'):
 
     def __init__(self, bot):
         self.bot = bot
-        self.ready = handle_ready(self.ready)
 
     def _reset(self, guild):
         "Delete schedule, handle, etc. and reset raid"
@@ -159,7 +157,8 @@ class Raid(Cog, name='raid'):
         log.info(f'{raid.leader} scheduled raid on {raid.target} @ '
                  f'{raid.schedule}')
 
-    async def ready(self, _):  # pylint: disable=method-hidden
+    @Cog.listener()
+    async def on_ready(self):  # pylint: disable=method-hidden
         "Schedule raid announcements from database on startup"
 
         if hasattr(self.bot, '__raid_ready__'):
