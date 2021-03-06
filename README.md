@@ -4,7 +4,7 @@ An extension pack for the [Aethersprite] Discord bot.
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
 
-# Categories/commands
+# Command categories
 
 - `raid`
   Schedule and announce raids
@@ -12,6 +12,9 @@ An extension pack for the [Aethersprite] Discord bot.
   Check stronghold stores of components, potions, and spells
 - `shop`
   Maintain shopping lists for components
+
+# Stand-alone commands
+
 - `sm`
   Sorcerer's Might countdown alarm
 - `tick`
