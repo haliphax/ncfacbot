@@ -1,6 +1,6 @@
 # Nexus Clash Faction Bot
 
-An extension pack for the [Aethersprite] Discord bot
+An extension pack for the [Aethersprite] Discord bot aimed at [Nexus Clash] factions
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
 
@@ -24,3 +24,4 @@ These categories (referred to as "Cogs") provide multiple commands.
 
 
 [Aethersprite]: https://github.com/haliphax/aethersprite
+[Nexus Clash]: https://www.nexusclash.com
