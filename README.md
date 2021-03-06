@@ -1,10 +1,12 @@
 # Nexus Clash Faction Bot
 
-An extension pack for the [Aethersprite] Discord bot.
+An extension pack for the [Aethersprite] Discord bot
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
 
 # Command categories
+
+These categories (referred to as "Cogs") provide multiple commands.
 
 - `raid`
   Schedule and announce raids
