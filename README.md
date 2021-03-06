@@ -4,7 +4,7 @@ An extension pack for the [Aethersprite] Discord bot
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
 
-# Command categories
+## :book: Command categories
 
 These categories (referred to as "Cogs") provide multiple commands.
 
@@ -15,7 +15,7 @@ These categories (referred to as "Cogs") provide multiple commands.
 - `shop`
   Maintain shopping lists for components
 
-# Stand-alone commands
+## :game_die: Stand-alone commands
 
 - `sm`
   Sorcerer's Might countdown alarm
