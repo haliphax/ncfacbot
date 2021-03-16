@@ -1,10 +1,12 @@
 # Nexus Clash Faction Bot
 
-An extension pack for the [Aethersprite] Discord bot.
+An extension pack for the [Aethersprite] [Discord] bot aimed at [Nexus Clash] factions
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
 
-# Command categories
+## :book: Command categories
+
+These categories (referred to as "Cogs") provide multiple commands.
 
 - `raid`
   Schedule and announce raids
@@ -13,7 +15,7 @@ An extension pack for the [Aethersprite] Discord bot.
 - `shop`
   Maintain shopping lists for components
 
-# Stand-alone commands
+## :game_die: Independent commands
 
 - `sm`
   Sorcerer's Might countdown alarm
@@ -22,3 +24,5 @@ An extension pack for the [Aethersprite] Discord bot.
 
 
 [Aethersprite]: https://github.com/haliphax/aethersprite
+[Discord]: https://discord.com
+[Nexus Clash]: https://www.nexusclash.com
