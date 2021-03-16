@@ -131,6 +131,11 @@ class Raid(Cog, name='raid'):
 
             return True
 
+        existing = self._handles.get(ctx.guild.id, None)
+
+        if existing is not None:
+            existing.cancel()
+
         handle = None
 
         if wait > 28800:
