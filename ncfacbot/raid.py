@@ -5,17 +5,20 @@ import asyncio as aio
 from datetime import datetime, timedelta, timezone
 from functools import partial
 # 3rd party
-from aethersprite import data_folder, log
-from aethersprite.authz import channel_only, require_roles_from_setting
-from aethersprite.common import (DATETIME_FORMAT, FakeContext, seconds_to_str,
-                                 THUMBS_DOWN)
-from aethersprite.filters import ChannelFilter, RoleFilter
-from aethersprite.settings import register, settings
+from discord import Embed
+from discord.colour import Colour
 from discord.ext.commands import check, Cog, command
 from sqlitedict import SqliteDict
+# api
+from aethersprite import data_folder, log
+from aethersprite.authz import channel_only, require_roles_from_setting
+from aethersprite.common import FakeContext, seconds_to_str, THUMBS_DOWN
+from aethersprite.filters import ChannelFilter, RoleFilter
+from aethersprite.settings import register, settings
 
 #: Expected format for schedule input
 INPUT_FORMAT = '%Y-%m-%d %H:%M %z'
+OUTPUT_FORMAT = '%Y-%m-%d %H:%M UTC'
 #: No raid message
 MSG_NO_RAID = ':person_shrugging: There is no scheduled raid.'
 
@@ -95,7 +98,7 @@ class Raid(Cog, name='raid'):
             loop.create_task(
                 c.send(f':stopwatch: @everyone '
                        f'**Reminder:** Raid on {raid.target} @ '
-                       f'{raid.schedule.strftime(DATETIME_FORMAT)}! '
+                       f'{raid.schedule.strftime(OUTPUT_FORMAT)}! '
                        f'(in 8 hours)'))
             log.info(f'8 hour reminder for {raid.target} @ '
                      f'{raid.schedule}')
@@ -154,11 +157,7 @@ class Raid(Cog, name='raid'):
         if silent:
             return
 
-        until = seconds_to_str(
-            (raid.schedule - datetime.now(timezone.utc)).total_seconds())
-        await c.send(f':white_check_mark: Raid on {raid.target} scheduled '
-                     f'for {raid.schedule.strftime(DATETIME_FORMAT)}!'
-                     f'\n_({until} from now)_')
+        await self.check_(ctx)
         log.info(f'{raid.leader} scheduled raid on {raid.target} @ '
                  f'{raid.schedule}')
 
@@ -233,9 +232,13 @@ class Raid(Cog, name='raid'):
         raid = self._schedules[ctx.guild.id]
         until = seconds_to_str(
             (raid.schedule - datetime.now(timezone.utc)).total_seconds())
-        await ctx.send(f':pirate_flag: Raid on {raid.target} scheduled '
-                       f'for {raid.schedule.strftime(DATETIME_FORMAT)} by '
-                       f'{raid.leader}.\n_({until} from now)_')
+        embed = Embed(title='Next raid', colour=Colour.red())
+        embed.add_field(name=':dart: Target', value=raid.target)
+        embed.add_field(name=':crown: Leader', value=raid.leader)
+        embed.add_field(name=':calendar: Schedule',
+                        value=raid.schedule.strftime(OUTPUT_FORMAT))
+        embed.set_footer(text=f'{until} from now')
+        await ctx.send(embed=embed)
 
     @command(name='raid.schedule', brief='Set raid schedule')
     @check(authz_schedule)
@@ -271,7 +274,7 @@ class Raid(Cog, name='raid'):
         raid.leader = nick
         self._schedules[ctx.guild.id] = raid
         await ctx.send(f':calendar: Schedule set to '
-                       f'{dt.strftime(DATETIME_FORMAT)}.')
+                       f'{dt.strftime(OUTPUT_FORMAT)}.')
         log.info(f'{ctx.author} set raid schedule: {dt}')
         await self._go(raid, ctx)
 
