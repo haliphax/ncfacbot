@@ -4,7 +4,7 @@ An extension pack for the [Aethersprite] [Discord] bot aimed at [Nexus Clash] fa
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
 
-## :book: Command categories
+## 📖 Command categories
 
 These categories (referred to as "Cogs") provide multiple commands.
 
@@ -15,7 +15,7 @@ These categories (referred to as "Cogs") provide multiple commands.
 - `shop`
   Maintain shopping lists for components
 
-## :game_die: Independent commands
+## 🎲 Independent commands
 
 - `sm`
   Sorcerer's Might countdown alarm
