@@ -128,6 +128,10 @@ class Raid(Cog, name='raid'):
 
         wait = (raid.schedule - datetime.now(timezone.utc)).total_seconds()
 
+        if wait <= -86400:
+            # more than a day old; drop
+            return True
+
         if wait <= 0:
             # in the past; announce immediately
             announce()
