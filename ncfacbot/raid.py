@@ -4,6 +4,8 @@
 import asyncio as aio
 from datetime import datetime, timedelta, timezone
 from functools import partial
+import math
+import time
 # 3rd party
 from discord import Embed
 from discord.colour import Colour
@@ -18,7 +20,10 @@ from aethersprite.settings import register, settings
 
 #: Expected format for schedule input
 INPUT_FORMAT = '%Y-%m-%d %H:%M %z'
-OUTPUT_FORMAT = '%Y-%m-%d %H:%M UTC'
+# OUTPUT_FORMAT = '%Y-%m-%d %H:%M UTC'
+def format_output(dt):
+    return f'<u:{math.trunc(time.mktime(dt.timetuple()))}>'
+
 #: No raid message
 MSG_NO_RAID = ':person_shrugging: There is no scheduled raid.'
 
@@ -98,7 +103,7 @@ class Raid(Cog, name='raid'):
             loop.create_task(
                 c.send(f':stopwatch: @everyone '
                        f'**Reminder:** Raid on {raid.target} @ '
-                       f'{raid.schedule.strftime(OUTPUT_FORMAT)}! '
+                       f'{format_output(raid.schedule)}! '
                        f'(in 8 hours)'))
             log.info(f'8 hour reminder for {raid.target} @ '
                      f'{raid.schedule}')
@@ -240,7 +245,7 @@ class Raid(Cog, name='raid'):
         embed.add_field(name=':dart: Target', value=raid.target)
         embed.add_field(name=':crown: Leader', value=raid.leader)
         embed.add_field(name=':calendar: Schedule',
-                        value=raid.schedule.strftime(OUTPUT_FORMAT))
+                        value=format_output(raid.schedule)
         embed.set_footer(text=f'{until} from now')
         await ctx.send(embed=embed)
 
@@ -278,7 +283,7 @@ class Raid(Cog, name='raid'):
         raid.leader = nick
         self._schedules[ctx.guild.id] = raid
         await ctx.send(f':calendar: Schedule set to '
-                       f'{dt.strftime(OUTPUT_FORMAT)}.')
+                       f'{format_output(dt)}.')
         log.info(f'{ctx.author} set raid schedule: {dt}')
         await self._go(raid, ctx)
 
