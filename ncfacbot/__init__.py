@@ -3,8 +3,23 @@
 # stdlib
 import calendar
 from datetime import datetime, timezone
+from math import trunc
+from time import mktime
 # 3rd party
 from aethersprite.common import FIFTEEN_MINS
+
+
+def discord_timestamp(dt: datetime):
+    """
+    Format output as Discord timestamp.
+
+    :param dt: The datetime object to format
+    :returns: A formatted Discord timestamp string
+    """
+
+    stamp = trunc(mktime(dt.timetuple()))
+
+    return f'<t:{stamp}>'
 
 
 def get_next_tick(n=1):

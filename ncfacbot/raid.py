@@ -17,13 +17,11 @@ from aethersprite.authz import channel_only, require_roles_from_setting
 from aethersprite.common import FakeContext, seconds_to_str, THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
 from aethersprite.settings import register, settings
+# local
+from . import discord_timestamp
 
 #: Expected format for schedule input
 INPUT_FORMAT = '%Y-%m-%d %H:%M %z'
-# OUTPUT_FORMAT = '%Y-%m-%d %H:%M UTC'
-def format_output(dt):
-    return f'<u:{math.trunc(time.mktime(dt.timetuple()))}>'
-
 #: No raid message
 MSG_NO_RAID = ':person_shrugging: There is no scheduled raid.'
 
@@ -103,7 +101,7 @@ class Raid(Cog, name='raid'):
             loop.create_task(
                 c.send(f':stopwatch: @everyone '
                        f'**Reminder:** Raid on {raid.target} @ '
-                       f'{format_output(raid.schedule)}! '
+                       f'{discord_timestamp(raid.schedule)}! '
                        f'(in 8 hours)'))
             log.info(f'8 hour reminder for {raid.target} @ '
                      f'{raid.schedule}')
@@ -245,7 +243,7 @@ class Raid(Cog, name='raid'):
         embed.add_field(name=':dart: Target', value=raid.target)
         embed.add_field(name=':crown: Leader', value=raid.leader)
         embed.add_field(name=':calendar: Schedule',
-                        value=format_output(raid.schedule)
+                        value=discord_timestamp(raid.schedule))
         embed.set_footer(text=f'{until} from now')
         await ctx.send(embed=embed)
 
@@ -282,8 +280,7 @@ class Raid(Cog, name='raid'):
         raid.schedule = dt
         raid.leader = nick
         self._schedules[ctx.guild.id] = raid
-        await ctx.send(f':calendar: Schedule set to '
-                       f'{format_output(dt)}.')
+        await ctx.send(f':calendar: Schedule set to {discord_timestamp(dt)}.')
         log.info(f'{ctx.author} set raid schedule: {dt}')
         await self._go(raid, ctx)
 
