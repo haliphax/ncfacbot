@@ -3,8 +3,6 @@
 # stdlib
 import calendar
 from datetime import datetime, timezone
-from math import trunc
-from time import mktime
 # 3rd party
 from aethersprite.common import FIFTEEN_MINS
 
@@ -17,7 +15,7 @@ def discord_timestamp(dt: datetime):
     :returns: A formatted Discord timestamp string
     """
 
-    stamp = trunc(mktime(dt.timetuple()))
+    stamp = calendar.timegm(dt.timetuple())
 
     return f'<t:{stamp}>'
 
