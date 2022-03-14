@@ -268,6 +268,7 @@ class Raid(Cog, name='raid'):
             else:
                 dt = datetime.strptime(f'{dt.strftime("%Y-%m-%d")} {when} '
                                        '+0000', INPUT_FORMAT)
+
                 if dt < datetime.now(timezone.utc):
                     dt = dt + timedelta(days=1)
         except:
