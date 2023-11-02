@@ -1,22 +1,22 @@
-"Load all command extensions"
+"""Load all command extensions"""
 
 META_EXTENSION = True
 
 _mods = (
-    'raid',
-    'safe',
-    'shop',
-    'sm',
-    'tick',
+    "raid",
+    "safe",
+    "shop",
+    "sm",
+    "tick",
 )
-_package = __name__.replace('._all', '')
+_package = __name__.replace("._all", "")
 
 
-def setup(bot):
+async def setup(bot):
     for m in _mods:
-        bot.load_extension(f'{_package}.{m}')
+        await bot.load_extension(f"{_package}.{m}")
 
 
-def teardown(bot):
+async def teardown(bot):
     for m in _mods:
-        bot.unload_extension(f'{_package}.{m}')
+        await bot.unload_extension(f"{_package}.{m}")

@@ -1,8 +1,9 @@
-"Nexus Clash extensions module"
+"""Nexus Clash extensions module"""
 
 # stdlib
 import calendar
 from datetime import datetime, timezone
+
 # 3rd party
 from aethersprite.common import FIFTEEN_MINS
 
@@ -17,7 +18,7 @@ def discord_timestamp(dt: datetime):
 
     stamp = calendar.timegm(dt.timetuple())
 
-    return f'<t:{stamp}>'
+    return f"<t:{stamp}>"
 
 
 def get_next_tick(n=1):
@@ -34,4 +35,3 @@ def get_next_tick(n=1):
     tick_stamp = (now + (n * FIFTEEN_MINS)) - (now % FIFTEEN_MINS)
 
     return datetime.fromtimestamp(tick_stamp, tz=timezone.utc)
-
