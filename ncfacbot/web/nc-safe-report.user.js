@@ -26,7 +26,7 @@
 
 	// constants
 	const SETTINGS_ICON = 'https://raw.githubusercontent.com/tailwindlabs/heroicons/master/optimized/outline/chat.svg',
-		POST_URL = 'https://ae.oddnetwork.org/nexusclash.safe/post';
+		POST_URL = 'https://shazbot.oddnetwork.org/nexusclash.safe/post';
 
 	const safe_forms = document.querySelectorAll(
 		'form[name="footlockergrab"]');
