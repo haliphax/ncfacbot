@@ -32,7 +32,7 @@ README_URL = config.get("ncfacbot", {}).get(
     "safe_contents_readme",
     environ.get(
         "SAFE_CONTENTS_README",
-        "https://github.com/haliphax/ncfacbot/blob/master/ncfacbot/" "safe.md",
+        "https://github.com/haliphax/ncfacbot/blob/master/ncfacbot/safe.md",
     ),
 )
 
