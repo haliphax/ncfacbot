@@ -5,16 +5,16 @@
 The `safe` commands collection allows people to view the contents of the
 faction safe from within Discord. This data has to come from Nexus Clash
 itself, however, and so a bridge is required. That bridge comes in the form
-of a [UserScript] that executes some code from a user's web browser when a
+of a [UserScript][] that executes some code from a user's web browser when a
 specific page or set of pages is visited. (In our case, that page is the main
 Nexus Clash interface.)
 
 ## Installation and configuration
 
-You will first need a UserScript manager. [TamperMonkey] is generally best,
+You will first need a UserScript manager. [TamperMonkey][] is generally best,
 though GreaseMonkey should work well enough. Once you have it installed,
 the installation prompt should appear as soon as you visit the URL for the
-[Safe Contents UserScript]. The script is also served by the bot's web
+[Safe Contents UserScript][]. The script is also served by the bot's web
 application back-end, and its URL can be requested with the `safe.script`
 command.
 
@@ -28,6 +28,6 @@ forward slash proceeding the first set of numbers is the channel ID, and can
 be ignored. As for the secret key... ask your Discord server admins/mods.
 
 
-[Safe Contents UserScript]: ../webapp/static/nc-safe-report.user.js
-[TamperMonkey]: https://www.tampermonkey.net/
-[UserScript]: https://en.wikipedia.org/wiki/Userscript
+[safe contents userscript]: ./web/nc-safe-report.user.js
+[tampermonkey]: https://www.tampermonkey.net/
+[userscript]: https://en.wikipedia.org/wiki/Userscript
