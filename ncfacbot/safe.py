@@ -1,4 +1,4 @@
-"Safe contents commands"
+"""Safe contents commands"""
 
 # stdlib
 from functools import partial
@@ -48,7 +48,7 @@ blueprint = Blueprint(
 
 
 def _get_database():
-    "Helper function to get a database reference"
+    """Helper function to get a database reference"""
 
     return SqliteDict(
         f"{data_folder}safe.sqlite3", tablename="contents", autocommit=True
@@ -56,7 +56,7 @@ def _get_database():
 
 
 class Safe(Cog, name="safe"):
-    "Safe contents commands"
+    """Safe contents commands"""
 
     _safe = _get_database()
     #: Emoji to use when displaying lists
@@ -67,7 +67,7 @@ class Safe(Cog, name="safe"):
     }
 
     async def _get(self, ctx: Context, kind: str):
-        "Helper function for retrieving item lists"
+        """Helper function for retrieving item lists"""
 
         assert ctx.guild
 
@@ -102,21 +102,21 @@ class Safe(Cog, name="safe"):
 
     @command(name="safe.help")
     async def help(self, ctx):
-        "View README for information about safe contents UserScript"
+        """View README for information about safe contents UserScript"""
 
         await ctx.send(f":information_source: <{README_URL}>")
         log.info(f"{ctx.author} viewed safe README info")
 
     @command()
     async def potions(self, ctx):
-        "Lists potions in the faction safe"
+        """Lists potions in the faction safe"""
 
         await self._get(ctx, "Potions")
         log.info(f"{ctx.author} viewed list of potions")
 
     @command(name="safe.script")
     async def script(self, ctx):
-        "Get URL for the UserScript to report safe contents"
+        """Get URL for the UserScript to report safe contents"""
 
         url = SCRIPT_URL
 
@@ -129,14 +129,14 @@ class Safe(Cog, name="safe"):
 
     @command()
     async def spells(self, ctx):
-        "Lists spell gems in the faction safe"
+        """Lists spell gems in the faction safe"""
 
         await self._get(ctx, "Spells")
         log.info(f"{ctx.author} viewed list of spells")
 
     @command()
     async def components(self, ctx):
-        "Lists components in the faction safe"
+        """Lists components in the faction safe"""
 
         await self._get(ctx, "Components")
         log.info(f"{ctx.author} viewed list of components")
@@ -146,7 +146,7 @@ roles_filter = RoleFilter("safe.roles")
 
 
 def _settings():
-    "Helper function for registering settings"
+    """Helper function for registering settings"""
 
     if "safe.key" in settings:
         return
@@ -193,12 +193,12 @@ async def teardown(bot: Bot):
 
 @blueprint.route("/post", methods=("POST",))
 def http_safe():
-    "Post safe contents from UserScript"
+    """Post safe contents from UserScript"""
 
     from flask import current_app
 
     def get_spell_text(spell, counts):
-        "Helper function to get spell output"
+        """Helper function to get spell output"""
 
         total = sum(counts)
         shots_txt = ", ".join([str(c) for c in counts])
@@ -303,7 +303,7 @@ def http_safe():
 
 
 def setup_webapp(app: Flask):
-    "Web application setup"
+    """Web application setup"""
 
     _settings()
     db = _get_database()
