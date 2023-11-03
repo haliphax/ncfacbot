@@ -22,6 +22,15 @@ These categories (referred to as "Cogs") provide multiple commands.
 - `tick`
   Time of next tick or *n* ticks from now
 
+## Development
+
+Installing the project's optional `dev` dependencies will install the
+`aethersprite` package from GitHub:
+
+```shell
+pip install -Ue .[dev]
+```
+
 
 [Aethersprite]: https://github.com/haliphax/aethersprite
 [Discord]: https://discord.com
