@@ -9,7 +9,8 @@ import typing
 # api
 from aethersprite import data_folder, log
 from aethersprite.authz import channel_only
-from aethersprite.common import FakeContext, THUMBS_DOWN
+from aethersprite.common import FakeContext
+from aethersprite.emotes import THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
 from aethersprite.settings import register, settings
 

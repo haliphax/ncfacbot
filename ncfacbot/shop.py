@@ -8,7 +8,7 @@ import typing
 # 3rd party
 from aethersprite import data_folder, log
 from aethersprite.authz import channel_only, require_roles_from_setting
-from aethersprite.common import THUMBS_DOWN
+from aethersprite.emotes import THUMBS_DOWN
 from aethersprite.filters import RoleFilter
 from aethersprite.settings import register, settings
 from discord.ext.commands import Bot, check, Cog, command, Context

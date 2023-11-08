@@ -17,7 +17,8 @@ from sqlitedict import SqliteDict
 # api
 from aethersprite import data_folder, log
 from aethersprite.authz import channel_only, require_roles_from_setting
-from aethersprite.common import FakeContext, seconds_to_str, THUMBS_DOWN
+from aethersprite.common import FakeContext, seconds_to_str
+from aethersprite.emotes import THUMBS_DOWN
 from aethersprite.filters import ChannelFilter, RoleFilter
 from aethersprite.settings import register, settings
 
