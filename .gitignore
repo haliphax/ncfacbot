@@ -1,4 +1,6 @@
-**/*.egg-info
-**/__pycache__/
+*.egg-info/
 .env
 .vscode/
+/.ruff-cache
+__pycache__/
+node_modules/

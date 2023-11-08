@@ -12,3 +12,14 @@ dev = ["aethersprite@git+https://github.com/haliphax/aethersprite.git"]
 
 [tool.setuptools]
 packages = ["ncfacbot"]
+
+[tool.black]
+line-length = 80
+
+[tool.ruff]
+ignore = [
+	# ambiguous variable name
+	"E741",
+]
+line-length = 80
+target-version = "py311"
