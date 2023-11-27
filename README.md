@@ -8,29 +8,19 @@ An extension pack for the [Aethersprite] [Discord] bot aimed at [Nexus Clash] fa
 
 These categories (referred to as "Cogs") provide multiple commands.
 
-- `raid`
-  Schedule and announce raids
-- `safe`
-  Check stronghold stores of components, potions, and spells
-- `shop`
-  Maintain shopping lists for components
+-   `raid`
+    Schedule and announce raids
+-   `safe`
+    Check stronghold stores of components, potions, and spells
+-   `shop`
+    Maintain shopping lists for components
 
 ## 🎲 Independent commands
 
-- `sm`
-  Sorcerer's Might countdown alarm
-- `tick`
-  Time of next tick or *n* ticks from now
-
-## Development
-
-Installing the project's optional `dev` dependencies will install the
-`aethersprite` package from GitHub:
-
-```shell
-pip install -Ue .[dev]
-```
-
+-   `sm`
+    Sorcerer's Might countdown alarm
+-   `tick`
+    Time of next tick or _n_ ticks from now
 
 [Aethersprite]: https://github.com/haliphax/aethersprite
 [Discord]: https://discord.com
