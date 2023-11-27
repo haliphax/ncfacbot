@@ -7,27 +7,37 @@ from os.path import dirname, join, realpath
 import re
 
 # 3rd party
+from discord.ext.commands import Bot, Cog, command, Context
+from fastapi import APIRouter, FastAPI, Request
+from fastapi.exceptions import HTTPException
+from fastapi.staticfiles import StaticFiles
+from sqlitedict import SqliteDict
+
+# api
 from aethersprite import config, data_folder, log
 from aethersprite.authz import channel_only, require_roles_from_setting
 from aethersprite.common import FakeContext
 from aethersprite.filters import RoleFilter
 from aethersprite.settings import register, settings
-from aethersprite.webapp import app as webapp
-from discord.ext.commands import Bot, Cog, command, Context
-from flask import abort, Blueprint, Flask, request, url_for
-from sqlitedict import SqliteDict
 
-#: Maximum number of items listed per Discord message to avoid rejection
 MAX_ITEMS_PER_MESSAGE = 20
-#: Regex for splitting apart spell gem text
+"""Maximum number of items listed per Discord message to avoid rejection"""
+
 SPELLS_PATTERN = r"([- a-zA-Z0-9]+) - Small \w+ Gem, (\d+) shots \((\d+)\)"
-#: Regex for getting counts from potions, etc.
+"""Regex for splitting apart spell gem text"""
+
 COUNTS_PATTERN = r"\((\d+)\)"
-#: URL for UserScript, if any
+"""Regex for getting counts from potions, etc."""
+
 SCRIPT_URL = config.get("ncfacbot", {}).get(
-    "safe_contents_script", environ.get("SAFE_CONTENTS_SCRIPT", None)
+    "safe_contents_script",
+    environ.get(
+        "SAFE_CONTENTS_SCRIPT",
+        "https://shazbot.oddnetwork.org/nexusclash.safe/static/nc-safe-report.user.js",
+    ),
 )
-#: URL for README, if any
+"""URL for UserScript, if any"""
+
 README_URL = config.get("ncfacbot", {}).get(
     "safe_contents_readme",
     environ.get(
@@ -35,16 +45,11 @@ README_URL = config.get("ncfacbot", {}).get(
         "https://github.com/haliphax/ncfacbot/blob/main/ncfacbot/safe.md",
     ),
 )
+"""URL for README, if any"""
 
 authz_safe = partial(require_roles_from_setting, setting="safe.roles")
-blueprint = Blueprint(
-    "safe",
-    __name__,
-    url_prefix="/nexusclash.safe",
-    root_path=realpath(dirname(__file__)),
-    static_url_path="/static",
-    static_folder="web",
-)
+router = APIRouter(prefix="/nexusclash.safe")
+static = StaticFiles(directory=join(realpath(dirname(__file__)), "web"))
 
 
 def _get_database():
@@ -59,12 +64,13 @@ class Safe(Cog, name="safe"):
     """Safe contents commands"""
 
     _safe = _get_database()
-    #: Emoji to use when displaying lists
+
     _icons = {
         "Components": "tools",
         "Potions": "test_tube",
         "Spells": "mage",
     }
+    """Emoji to use when displaying lists"""
 
     async def _get(self, ctx: Context, kind: str):
         """Helper function for retrieving item lists"""
@@ -118,13 +124,7 @@ class Safe(Cog, name="safe"):
     async def script(self, ctx):
         """Get URL for the UserScript to report safe contents"""
 
-        url = SCRIPT_URL
-
-        if url is None:
-            with webapp.app_context():
-                url = url_for("safe.static", filename="nc-safe-report.user.js")
-
-        await ctx.send(f":space_invader: <{url}>")
+        await ctx.send(f":space_invader: <{SCRIPT_URL}>")
         log.info(f"{ctx.author} viewed URL for UserScript")
 
     @command()
@@ -191,8 +191,8 @@ async def teardown(bot: Bot):
         del settings[k]
 
 
-@blueprint.route("/post", methods=("POST",))
-def http_safe():
+@router.post("/post")
+async def http_safe(request: Request):
     """Post safe contents from UserScript"""
 
     from flask import current_app
@@ -206,21 +206,21 @@ def http_safe():
         return f"{spell} **({total})** ||[{shots_txt}]||"
 
     db = getattr(current_app, "ext_safe_db")
-    data = request.get_json(force=True)
+    data = await request.json()
 
     for k in ("guild", "items", "key"):
         if k not in data:
-            return abort(400)
+            raise HTTPException(400)
 
     guild = data["guild"]
     ctx = FakeContext(guild={"id": guild})
-    key = settings["safe.key"].get(ctx)
+    key = settings["safe.key"].get(ctx)  # type: ignore
 
     if key is None:
-        return abort(401)
+        raise HTTPException(401)
 
     if key != data["key"]:
-        return abort(403)
+        raise HTTPException(403)
 
     # massage/validate data
     for category in (
@@ -302,10 +302,11 @@ def http_safe():
     return "", 200
 
 
-def setup_webapp(app: Flask):
+def setup_webapp(app: FastAPI, _):
     """Web application setup"""
 
     _settings()
     db = _get_database()
     setattr(app, "ext_safe_db", db)
-    app.register_blueprint(blueprint)
+    app.mount(f"{router.prefix}/static", static)
+    app.include_router(router)
