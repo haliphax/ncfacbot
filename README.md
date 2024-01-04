@@ -1,8 +1,27 @@
 # Nexus Clash Faction Bot
 
-An extension pack for the [Aethersprite] [Discord] bot aimed at [Nexus Clash] factions
+An extension pack for the [Aethersprite][] [Discord][] bot aimed at
+[Nexus Clash][] factions
 
 ![ncfacbot](https://github.com/haliphax/ncfacbot/raw/assets/ncfacbot.jpg)
+
+## 🏃 Installing
+
+First, make a `config.toml` file from the provided `config.example.toml` file,
+providing it with your username, API token, and any settings tweaks you wish to
+apply.
+
+Then, install the bot package in your Python environment of choice:
+
+```shell
+pip install -U 'ncfacbot@git+https://github.com/haliphax/ncfacbot.git'
+```
+
+In the same directory as your `config.toml` file:
+
+```shell
+python -m aethersprite
+```
 
 ## 📖 Command categories
 
