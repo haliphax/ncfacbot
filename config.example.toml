@@ -1,0 +1,11 @@
+[bot]
+data_folder = "data"
+extensions = ["aethersprite.extensions.base._all", "ncfacbot._all"]
+help_command = "help"
+owner = "haliphax#4859"
+prefix = "!"
+token = "SOMEREALLYLONGSTRINGTHATDISCORDGIVESYOU"
+
+[webapp]
+host = "0.0.0.0"
+port = 5000
